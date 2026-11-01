@@ -1,0 +1,226 @@
+{
+  "parameters": {
+    "V0": 1.0,
+    "t_i": -1000000.0,
+    "shear_frac": 0.0001,
+    "rho_stop": 10000000000.0,
+    "p_list": [
+      0.01,
+      0.05,
+      0.1,
+      0.3,
+      0.5
+    ]
+  },
+  "steps": {
+    "1": {
+      "table": [
+        {
+          "p": 0.01,
+          "w": 65.66666666666667,
+          "rho_phi_exp_fit": -199.99989791398121,
+          "rho_phi_exp_theory": -200.0,
+          "ratio_exp_fit": 193.99989791398133,
+          "ratio_exp_theory": 194.0,
+          "ratio_fit_R2": 0.9999999999991164
+        },
+        {
+          "p": 0.05,
+          "w": 12.333333333333332,
+          "rho_phi_exp_fit": -39.99997081407596,
+          "rho_phi_exp_theory": -40.0,
+          "ratio_exp_fit": 33.99997081407592,
+          "ratio_exp_theory": 34.0,
+          "ratio_fit_R2": 0.9999999999981326
+        },
+        {
+          "p": 0.1,
+          "w": 5.666666666666666,
+          "rho_phi_exp_fit": -19.999977992936415,
+          "rho_phi_exp_theory": -20.0,
+          "ratio_exp_fit": 13.999977992936495,
+          "ratio_exp_theory": 13.999999999999998,
+          "ratio_fit_R2": 0.9999999999952742
+        },
+        {
+          "p": 0.3,
+          "w": 1.2222222222222223,
+          "rho_phi_exp_fit": -6.666544484698981,
+          "rho_phi_exp_theory": -6.666666666666667,
+          "ratio_exp_fit": 0.6665444854344146,
+          "ratio_exp_theory": 0.666666666666667,
+          "ratio_fit_R2": 0.9999999992895323
+        },
+        {
+          "p": 0.5,
+          "w": 0.33333333333333326,
+          "rho_phi_exp_fit": -4.000701343989172,
+          "rho_phi_exp_theory": -4.0,
+          "ratio_exp_fit": -1.9992985711956615,
+          "ratio_exp_theory": -2.0,
+          "ratio_fit_R2": 0.9999999757832689
+        }
+      ]
+    },
+    "2": {
+      "p": 0.1,
+      "tolerance_sweep": [
+        {
+          "rtol": 1e-07,
+          "C_rel_max": 3.191762993815447e-06,
+          "m": 13.999979232976804,
+          "u_self_diff": 1.8981347138715598e-06
+        },
+        {
+          "rtol": 1e-09,
+          "C_rel_max": 1.9709984589865387e-08,
+          "m": 13.99997798509037,
+          "u_self_diff": 1.2662197097993504e-08
+        },
+        {
+          "rtol": 1e-11,
+          "C_rel_max": 1.8911211301970107e-10,
+          "m": 13.99997797757649,
+          "u_self_diff": 1.0347483252841576e-10
+        },
+        {
+          "rtol": 1e-13,
+          "C_rel_max": 1.7376468131694098e-12,
+          "m": 13.999977977520162,
+          "u_self_diff": NaN
+        }
+      ],
+      "shear_sensitivity": [
+        {
+          "shear_frac": 1e-06,
+          "m": 13.999999778603954,
+          "ratio_final": 3.4196768188559794e-23
+        },
+        {
+          "shear_frac": 0.0001,
+          "m": 13.999977855046861,
+          "ratio_final": 3.419821911312344e-21
+        },
+        {
+          "shear_frac": 0.01,
+          "m": 13.997785665188916,
+          "ratio_final": 3.4343364109521407e-19
+        }
+      ],
+      "V0_sensitivity": [
+        {
+          "V0": 0.1,
+          "m": 13.999977855046751
+        },
+        {
+          "V0": 1.0,
+          "m": 13.999977855046861
+        },
+        {
+          "V0": 10.0,
+          "m": 13.999977855047165
+        }
+      ]
+    },
+    "3": {
+      "p": 0.1,
+      "rho_c_list": [
+        {
+          "rho_c": 0.041,
+          "t_bounce": -4.12946704385893,
+          "a_bounce": 0.25134064901938874,
+          "rho_at_bounce": 0.04100000000069106,
+          "a_GR_at_rho_c": 0.2472958736870861
+        },
+        {
+          "rho_c": 0.41,
+          "t_bounce": -3.819662352953512,
+          "a_bounce": 0.22400758910932916,
+          "rho_at_bounce": 0.4100000000046411,
+          "a_GR_at_rho_c": 0.22040267942021974
+        },
+        {
+          "rho_c": 4.1,
+          "t_bounce": -3.7216935268727624,
+          "a_bounce": 0.19964697389482802,
+          "rho_at_bounce": 4.100000000069145,
+          "a_GR_at_rho_c": 0.196434094800462
+        }
+      ],
+      "smoothing_factor_to_rho_0.41": 6.383166585013354e-10,
+      "n_efolds_to_rho_0.41": 1.5122990446982374,
+      "t_c_offset": -3.87239166064782,
+      "post_bounce_expansion_factor": 1.0114619818082313,
+      "notes": "effective Friedmann equation specified by hand; model recollapses after the bounce (rho -> 0 in expansion); crunch time t is shifted by the marginal time-translation mode, t-invariant observables are unaffected"
+    },
+    "4": {
+      "Q_rows": [
+        {
+          "p": 0.01,
+          "Q_exp_fit": 96.99996597479357,
+          "Q_exp_theory": 97.0,
+          "Q_R2": 0.9999999999995123,
+          "Q_i": 50000154.63965353,
+          "Q_final": 2.09109847129774e-05
+        },
+        {
+          "p": 0.05,
+          "Q_exp_fit": 16.9999909474561,
+          "Q_exp_theory": 17.0,
+          "Q_R2": 0.9999999999992315,
+          "Q_i": 10000176.473702477,
+          "Q_final": 0.0005583478766080386
+        },
+        {
+          "p": 0.1,
+          "Q_exp_fit": 6.999993842488635,
+          "Q_exp_theory": 6.999999999999999,
+          "Q_R2": 0.9999999999987094,
+          "Q_i": 5000214.2948983535,
+          "Q_final": 0.029239621711589423
+        },
+        {
+          "p": 0.3,
+          "Q_exp_fit": 0.3333561190554525,
+          "Q_exp_theory": 0.33333333333333365,
+          "Q_R2": 0.9999999819390345,
+          "Q_i": 1668168.0178827588,
+          "Q_final": 124047.51228474801
+        },
+        {
+          "p": 0.5,
+          "Q_exp_fit": -0.9972233007915502,
+          "Q_exp_theory": -1.0,
+          "Q_R2": 0.9999992222777125,
+          "Q_i": 999700.0899730078,
+          "Q_final": 506.446337768849
+        }
+      ],
+      "a_at_Q_equal_1_p0.1_hbar1": 0.1104082753817934,
+      "notes": "self-consistency criterion for a WKB state on the classical trajectory; hbar kept as a free overall factor"
+    },
+    "6a": {
+      "spectrum": "lambda = {0, -(1-3p)/p = -3(w-1)/2, -2/p = -3(w+1)}",
+      "stability_boundary_p": 0.3333333333333333,
+      "numeric_p0.1": [
+        -20.00000000911529,
+        -6.9999999888855555,
+        -5.551116899482622e-09
+      ],
+      "measured_decay_p0.1_du1e-2": "see printed rates; theory (1-3p)/p = 7.00 for p = 0.1"
+    },
+    "6b": {
+      "n_cycles_resolved": 115,
+      "interval_law_A": 0.09054638227833772,
+      "interval_law_gamma": 2.0135745222492925,
+      "u_growth_per_cycle": 5.193776479953651,
+      "t_acc_estimate": -3.6253987418394713,
+      "note": "Zeno-type accumulation: infinite bounces, divergent |u|, finite time"
+    },
+    "6c": {
+      "u_bounce": -2.434803071367046,
+      "breakdown_dt": 0.1929248595683326,
+      "note": "sign flip does not rescue expansion; rho returns to the constraint boundary in finite time"
+    }
+  }
+}
