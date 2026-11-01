@@ -793,6 +793,123 @@ metrics['steps']['6c'] = {
 """)
 
 # ---------------------------------------------------------------------------
+md("""\
+## Step 7 — The analytic origin of the $\\gamma=2$ cascade law
+
+The empirical law of step 6, $\\Delta t_n = A/n^2$, is derivable in three
+short steps. Work at fixed $\\rho_c$, asymptotically in the cycle number $n$
+(so $|V| \\gg \\rho_c$ at the turnarounds), and neglect $R$.
+
+**(i) Cycle time.** Along the effective flow, $\\rho+p = u^2$ and
+$H=\\sqrt{\\rho(1-\\rho/\\rho_c)/3}$, so the time for one traversal
+$\\rho_c\\to0$ or $0\\to\\rho_c$ at approximately constant $u$ is
+
+$$T_{1/2}=\\int_0^{\\rho_c}\\frac{\\dd\\rho}{3Hu^2}
+  =\\frac{1}{\\sqrt3\\,u^2}\\int_0^{\\rho_c}\\frac{\\dd\\rho}
+     {\\sqrt{\\rho(1-\\rho/\\rho_c)}}
+  =\\frac{\\pi\\sqrt{\\rho_c/3}}{u^2},$$
+
+the $\\rho$-integral being elementary ($\\rho=\\rho_c\\sin^2\\theta$). A full
+bounce-to-bounce cycle has $T(u)=2\\pi\\sqrt{\\rho_c/3}/u^2$.
+
+**(ii) Velocity growth.** Over a cycle, $\\Delta u=\\oint\\dot u\\,\\dd t$
+with $\\dot u=-3Hu-c|V|$. The friction term integrates to
+$-3\\oint H\\,\\dd t=-3\\,\\Delta\\ln a\\approx0$ ($a$ returns to its
+bounce value), and $|V|$ is near-constant across a cycle (the field moves
+by only $\\Delta\\phi\\sim1/u$), so
+
+$$\\Delta u \\simeq -c\\,|V|\\,T
+  = -c\\,\\frac{u^2}{2}\\cdot\\frac{2\\pi\\sqrt{\\rho_c/3}}{u^2}
+  = -c\\pi\\sqrt{\\rho_c/3} \\;\\equiv\\; -\\alpha,$$
+
+using the turnaround constraint $|V|=u^2/2-\\rho_c+R\\simeq u^2/2$: the
+$u^2$ **cancels** and the growth per cycle is a constant,
+$\\alpha=c\\pi\\sqrt{\\rho_c/3}$. Hence $u_n\\simeq\\alpha n$.
+
+**(iii) The law.** Substituting,
+
+$$\\Delta t_n=\\frac{2\\pi\\sqrt{\\rho_c/3}}{u_n^2}
+  =\\frac{2\\pi\\sqrt{\\rho_c/3}}{\\alpha^2}\\,\\frac{1}{n^2}
+  =\\frac{3p}{\\pi\\sqrt{3\\rho_c}}\\;\\frac{1}{n^2},$$
+
+i.e. $\\gamma=2$ **exactly**, with $A=3p/\\pi\\sqrt{3\\rho_c}$. Two further
+predictions follow with no free parameters:
+
+* **Field drift:** $\\Delta\\phi_n=\\oint u\\,\\dd t\\simeq-u_nT_n
+  =-2/(cn)$, so $\\phi_n=\\phi_0-(2/c)\\ln n$ — a *harmonic*, not
+  geometric, creep (the apparent asymptote of step 6 is $\\ln n$).
+* **Accumulation time:** $t_{\\rm acc}-t_N
+  =A\\sum_{k>N}k^{-2}=A\\,(\\pi^2/6-H_N^{(2)})\\simeq A/N$.
+
+All four are confirmed below, for two values of $p$ (which also tests the
+predicted $A\\propto p$ scaling): $\\alpha$ to four significant digits, the
+scaled cycle time $\\Delta t_nu_n^2/2\\pi\\sqrt{\\rho_c/3}=1$ to
+$\\sim2\\%$ (the residual being the $1/n$ transient at small $n$), the
+$\\phi$-law to $0.4\\%$, and $t_{\\rm acc}$ to the digit.
+""")
+
+code("""\
+# ---- step 7: verification of the analytic cascade law ----
+from scipy.optimize import curve_fit
+
+def cascade_check(p, rho_c=0.41, V0=1.0, t_i=-1e6):
+    c = np.sqrt(2/p)
+    alpha_pred = c*np.pi*np.sqrt(rho_c/3)
+    A_pred = 3*p/(np.pi*np.sqrt(3*rho_c))
+    sc, _ = ek.integrate_effective(p, V0, t_i, 1e-4, rho_c=rho_c,
+                                   stop_at_rho0=False, floor_factor=1e-8,
+                                   t_end=1e6)
+    tb = sc.t_events[0]                      # bounces: full cycles
+    iv = np.diff(tb); n = np.arange(1, len(iv)+1)
+    uu = np.array([abs(sc.sol(t)[1]) for t in tb[1:]])
+    alpha_m = np.polyfit(n, uu, 1)[0]
+    ratio = iv * uu**2 / (2*np.pi*np.sqrt(rho_c/3))
+    ph = np.array([sc.sol(t)[0] for t in tb[1:]])
+    dphi_ratio = np.mean((ph[1:]-ph[:-1]) / (-2/(c*n[1:])))
+    t_acc = tb[-1] + A_pred*(np.pi**2/6 - np.sum(n**-2.0))
+    return dict(p=p, alpha_pred=alpha_pred, alpha_m=alpha_m,
+                A_pred=A_pred, ratio_mean=ratio[8:].mean(),
+                ratio_std=ratio[8:].std(), dphi_ratio=dphi_ratio,
+                t_acc=t_acc, n_cycles=len(iv), tb=tb, iv=iv, n=n, uu=uu)
+
+checks = [cascade_check(0.1), cascade_check(0.05)]
+print('p     alpha (pred)   alpha (meas)   dt*u^2/2pi..    dphi ratio   A_pred   n_cyc')
+for r in checks:
+    print(f"{r['p']:<5} {r['alpha_pred']:<14.4f} {r['alpha_m']:<14.4f} "
+          f"{r['ratio_mean']:.4f}+-{r['ratio_std']:.1e}   {r['dphi_ratio']:.4f}       "
+          f"{r['A_pred']:.5f}  {r['n_cycles']}")
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4.2))
+for r, col in zip(checks, ('C0', 'C1')):
+    nn, iv = r['n'], r['iv']
+    ax1.loglog(nn, iv*nn**2, '.', ms=3, color=col,
+               label=f"p={r['p']}: $A_n=\\\\Delta t_n n^2$ (pred {r['A_pred']:.4f})")
+    ax1.axhline(r['A_pred'], color=col, ls='--', lw=1)
+    ax2.plot(nn, r['uu']/r['alpha_pred'], '.', ms=3, color=col,
+             label=f"p={r['p']}: $u_n/\\\\alpha$ (slope 1)")
+    ax2.plot(nn, nn, '-', lw=1, color=col)
+ax1.set_xlabel('cycle n'); ax1.set_ylabel(r'$\\Delta t_n\\, n^2$')
+ax1.set_title(r'$\\Delta t_n\\, n^2 = A = 3p/\\pi\\sqrt{3\\rho_c}$')
+ax1.legend(fontsize=8)
+ax2.set_xlabel('cycle n'); ax2.set_ylabel('$u_n/\\\\alpha$')
+ax2.set_title('Velocity growth: $u_n = \\\\alpha n$, $\\\\alpha=c\\\\pi\\\\sqrt{\\\\rho_c/3}$')
+ax2.legend(fontsize=8)
+fig.tight_layout()
+fig.savefig(FIGS / 'fig8_cascade_law.png')
+plt.show()
+
+metrics['steps']['7'] = {
+    'law': 'dt_n = A/n^2, A = 3p/(pi*sqrt(3*rho_c)); u_n = alpha*n, '
+           'alpha = c*pi*sqrt(rho_c/3); dphi_n = -2/(c n); '
+           't_acc - t_N = A (pi^2/6 - H_N^(2))',
+    'checks': [{k: v for k, v in r.items()
+                if k in ('p', 'alpha_pred', 'alpha_m', 'A_pred',
+                         'ratio_mean', 'ratio_std', 'dphi_ratio', 'n_cycles')}
+               for r in checks],
+}
+""")
+
+# ---------------------------------------------------------------------------
 code("""\
 out = {'parameters': {'V0': V0, 't_i': t_i, 'shear_frac': SHEAR_FRAC,
                       'rho_stop': RHO_STOP, 'p_list': P_LIST},

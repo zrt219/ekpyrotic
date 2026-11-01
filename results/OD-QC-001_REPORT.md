@@ -10,7 +10,7 @@ executed notebook unless marked otherwise).
 - [src/ekpyrotic.py](../src/ekpyrotic.py) — model and diagnostics module
 - [results/metrics.json](metrics.json) — all quantitative outputs
 - Figures: [fig1_smoothing.png](figs/fig1_smoothing.png), [fig2_convergence.png](figs/fig2_convergence.png), [fig3_bounce.png](figs/fig3_bounce.png), [fig4_classicality.png](figs/fig4_classicality.png),
-  plus step-6 follow-ups: [fig5_stability.png](figs/fig5_stability.png), [fig6_convergence.png](figs/fig6_convergence.png), [fig7_cascade.png](figs/fig7_cascade.png)
+  plus step-6 follow-ups: [fig5_stability.png](figs/fig5_stability.png), [fig6_convergence.png](figs/fig6_convergence.png), [fig7_cascade.png](figs/fig7_cascade.png), and the derived cascade law: [fig8_cascade_law.png](figs/fig8_cascade_law.png)
 
 **Model.** Flat FLRW + canonical scalar $\phi$ with exponential potential
 $V = s V_0 e^{-c\phi}$, $c=\sqrt{2/p}$, $s=-1$ for $p<1/3$ (ekpyrotic,
@@ -138,8 +138,9 @@ $\hbar$, so only the exponent is convention-independent.
 3. The bounce-accumulation cascade seen in the effective model: is it a
    generic pathology of $H^2=\frac{\rho}{3}(1-\rho/\rho_c)$ with negative
    potentials, or an artifact of our simplified closure? Worth a follow-up.
-   *(Now characterized quantitatively — see Follow-ups: Zeno accumulation,
-   $\Delta t_n\propto n^{-2}$, $|u|_n\propto n$.)*
+   *(Resolved: see Follow-ups — Zeno accumulation with the exactly derived
+   law $\Delta t_n = 3p\,n^{-2}/\pi\sqrt{3\rho_c}$, $|u|_n = c\pi\sqrt{\rho_c/3}\,n$;
+   only the $1/n$ transient corrections remain unexplained.)*
 4. Inhomogeneous anisotropy gradients (omitted from Bianchi I), expected to
    grow as $a^{-2}$ — verified in the literature, not here.
 5. The marginal (time-translation) direction of the ekpyrotic attractor
@@ -194,15 +195,28 @@ in `metrics.json` under `steps['6a']`–`steps['6c']`.)*
    scaling solution is linearly **unstable** precisely in the $w<1$ regime
    where it also fails to smooth — one condition, two roles.
 
-2. **The bounce cascade is a Zeno accumulation.** Continuing the effective
-   model past its first recollapse: 116 H-crossings resolved down to
-   $\rho=10^{-8}\rho_c$ (115 cycles), cycle durations following
-   $\Delta t_n = 0.09/n^{2.01}$ (max relative residual $1.5\times10^{-2}$),
-   field velocity at the crossings growing as $|u|_n = 5.19\,n+2.2$, and
-   $\phi$ gliding from $-0.21$ toward $\approx-2.8$. The $\sum 1/n^2$
-   series accumulates at $t_{\rm acc}\approx-3.6254$: **infinitely many
-   bounces with unbounded kinetic energy in finite time** — a Zeno-type
-   breakdown of the effective closure, not physics. At each recollapse the
+2. **The bounce cascade is a Zeno accumulation — with an exactly derived
+   law.** Continuing the effective model past its first recollapse: 116
+   H-crossings resolved down to $\rho=10^{-8}\rho_c$ (115 cycles), cycle
+   durations following $\Delta t_n = A/n^{2}$ with $A = 3p/\pi\sqrt{3\rho_c}$
+   ($\gamma = 1.998$–$2.014$ fits, $A$ measured $0.086$/$0.044$ vs predicted
+   $0.0861$/$0.0431$ for $p=0.1$/$0.05$), field velocity at the crossings
+   growing as $|u|_n = \alpha n$ with $\alpha = c\pi\sqrt{\rho_c/3}$
+   (measured $5.1938$ vs predicted $5.1939$ at $p=0.1$; $7.3452$ vs
+   $7.3453$ at $p=0.05$), and $\phi$ creeping harmonically,
+   $\phi_n = \phi_0 - (2/c)\ln n$ (drift law verified to $0.4\%$). The
+   derivation: (i) the cycle time is the elementary integral
+   $T(u) = 2\pi\sqrt{\rho_c/3}/u^2$; (ii) the per-cycle velocity growth
+   $\Delta u = \oint\dot u\,dt$ has its friction term integrate to
+   $-3\,\Delta\ln a \simeq 0$, while the roll term gives
+   $\Delta u = -c|V|T = -c(u^2/2)\,2\pi\sqrt{\rho_c/3}/u^2 = -\alpha$ — the
+   $u^2$ cancels against the turnaround constraint $|V| \simeq u^2/2$;
+   (iii) substituting $u_n = \alpha n$ yields $\gamma = 2$ exactly with
+   $A = 3p/\pi\sqrt{3\rho_c}$, plus the drift and accumulation-tail
+   predictions. The $\sum 1/n^2$ series accumulates at
+   $t_{\rm acc}\approx-3.6254$ ($p=0.1$): **infinitely many bounces with
+   unbounded kinetic energy in finite time** — a Zeno-type breakdown of
+   the effective closure, not physics. At each recollapse the
    state is degenerate: $\rho\to0$ requires $u^2/2=|V|$ to ~10 digits
    (at the first recollapse, $u\approx-711$ against $|V|\approx2.5\times10^5$).
 

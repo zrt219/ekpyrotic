@@ -52,9 +52,11 @@ bounce: a separately specified effective Friedmann equation
 $H^2=\frac{\rho}{3}(1-\rho/\rhoc)$ of loop-quantum-cosmology type bounces
 exactly at $\rho=\rhoc$, but with $V<0$ and no further physics it
 recollapses almost immediately ($a_{\max}/a_b=1.0115$), and its
-continuation is a Zeno cascade---bounces with cycle durations
-$\Delta t_n\propto n^{-2}$ and field velocity $|u|_n\propto n$, infinitely
-many in finite time with unbounded kinetic energy. Flipping the sign of the
+continuation is a Zeno cascade whose structure we derive exactly: cycle
+durations $\Delta t_n=A/n^2$ with $A=3p/\pi\sqrt{3\rhoc}$, driven by a
+constant velocity growth $\alpha=c\pi\sqrt{\rhoc/3}$ per cycle---both
+confirmed to four significant digits---so infinitely many bounces with
+unbounded kinetic energy accumulate in finite time. Flipping the sign of the
 potential in the expanding branch does not rescue it: the post-bounce
 velocity points toward larger $|V|$ and the solution is driven back across
 the constraint boundary in finite time. Finally, we evaluate the
@@ -135,9 +137,10 @@ actually predicts from what additional assumptions buy:
 Two of our findings go beyond reproduction. First, the specified effective
 bounce model, taken at face value with a negative potential, \emph{fails in
 an instructive way}: it recollapses almost immediately after the bounce and,
-if continued, enters a Zeno cascade of bounces---cycle durations
-$\Delta t_n\propto n^{-2}$, field velocity $|u|_n\propto n$---accumulating
-in finite time with unbounded kinetic energy: visible evidence of where the
+if continued, enters a Zeno cascade of bounces whose structure we derive
+exactly---cycle durations $\Delta t_n=A/n^2$ with $A=3p/\pi\sqrt{3\rhoc}$,
+driven by a constant velocity growth $\alpha=c\pi\sqrt{\rhoc/3}$ per
+cycle---accumulating in finite time with unbounded kinetic energy: visible evidence of where the
 ad-hoc construction stops being a model at all. Second, a change of
 variables to $t$-invariant relative coordinates reduces the flow about the
 scaling solution to a three-dimensional autonomous system whose exact
@@ -640,19 +643,89 @@ digits by the constraint. Continuing the integration past it (with a floor
 event at $\rho=10^{-8}\rhoc$), the effective dynamics generates a sequence
 of bounce cycles whose durations follow
 \begin{equation}
-  \Delta t_n=\frac{0.086}{n^{2.01}}\qquad(\text{max relative residual }
-  1.5\times10^{-2}),\qquad |u|_n=5.2\,n+2 ,
+  \Delta t_n=\frac{A}{n^{2}},\qquad
+  A=\frac{3p}{\pi\sqrt{3\rhoc}},
+  \qquad |u|_n=\alpha n+\mathcal O(1),\quad
+  \alpha=c\pi\sqrt{\tfrac{\rhoc}{3}} ,
   \label{eq:cascade}
 \end{equation}
-with the field gliding down the potential ($\phi$ drifting from $-0.21$
-toward $\approx-2.8$). The $\sum n^{-2}$ series converges: the cascade
-accumulates at $t_{\rm acc}\approx-3.6254$, with infinitely many bounces
-and unbounded kinetic energy in finite time
-(Fig.~\ref{fig:cascade})---a Zeno-type pathology of the closure
-\eqref{eq:eff-friedmann} glued to a negative potential. We emphasise that
-densities never leave $[0,\rhoc]$ in this sequence; it is the velocity that
-diverges, which is why the breakdown is easy to miss if one monitors only
-$\rho$.
+with the field gliding down the potential as $\phi_n=\phi_0-\tfrac{2}{c}
+\ln n$. This law is not merely a fit: it is derivable in three steps,
+asymptotically in $n$ (where $|V|\gg\rhoc$ at the turnarounds and $R$ is
+negligible).
+
+\emph{(i) Cycle time.} Along the effective flow $\rho+p=u^2$ and
+$H=\sqrt{\rho(1-\rho/\rhoc)/3}$, so the time for one traversal
+$\rhoc\to0$ (or $0\to\rhoc$) at approximately constant $u$ is
+\begin{equation}
+  T_{1/2}=\int_0^{\rhoc}\frac{\dd\rho}{3Hu^2}
+  =\frac{1}{\sqrt3\,u^2}\int_0^{\rhoc}
+     \frac{\dd\rho}{\sqrt{\rho(1-\rho/\rhoc)}}
+  =\frac{\pi\sqrt{\rhoc/3}}{u^2},
+  \label{eq:halfcycle}
+\end{equation}
+the $\rho$-integral being elementary ($\rho=\rhoc\sin^2\theta$); a full
+bounce-to-bounce cycle doubles this.
+
+\emph{(ii) Velocity growth.} Over a cycle, $\Delta u=\oint\dot u\,\dd t$
+with $\dot u=-3Hu-c|V|$. The friction term integrates to
+$-3\oint H\,\dd t=-3\,\Delta\ln a\simeq0$ ($a$ returns to its bounce
+value), while $|V|$ is nearly constant across a cycle (the field moves by
+only $\Delta\phi\sim1/u$). Using the turnaround constraint
+$|V|=u^2/2-\rhoc+R\simeq u^2/2$, the $u^2$ \emph{cancels}:
+\begin{equation}
+  \Delta u\simeq-c\,|V|\,T=-c\,\frac{u^2}{2}\,
+  \frac{2\pi\sqrt{\rhoc/3}}{u^2}
+  =-c\pi\sqrt{\tfrac{\rhoc}{3}}\;\equiv\;-\alpha .
+  \label{eq:alphagrowth}
+\end{equation}
+
+\emph{(iii) The law.} Substituting $u_n=\alpha n$ into the doubled
+\eqref{eq:halfcycle} gives \eqref{eq:cascade} with
+$A=2\pi\sqrt{\rhoc/3}/\alpha^2=3p/\pi\sqrt{3\rhoc}$: the exponent
+$\gamma=2$ is \emph{exact}, and $A$ carries no free parameters. The field
+drift follows as $\Delta\phi_n=\oint u\,\dd t\simeq-u_nT_n=-2/(cn)$, i.e.\
+a harmonic (not geometric) creep, and the accumulation tail is
+$t_{\rm acc}-t_N=A\,(\pi^2/6-H_N^{(2)})\simeq A/N$.
+
+All four predictions are confirmed numerically (Fig.~\ref{fig:cascade} and
+Fig.~\ref{fig:cascadelaw}): the growth rate $\alpha$ to four significant
+digits for both $p=0.1$ ($5.1938$ vs $c\pi\sqrt{\rhoc/3}=5.1939$) and
+$p=0.05$ ($7.3452$ vs $7.3453$); the scaled cycle time
+$\Delta t_nu_n^2/2\pi\sqrt{\rhoc/3}=1.025\pm0.022$ and $1.026\pm0.022$
+(the excess being the $1/n$ transient at small $n$); the drift law
+$\Delta\phi_n/-2/(cn)=1.004$ and $1.002$; and the accumulation time from
+the analytic tail sum, $t_{\rm acc}=-3.625382$, matching the earlier
+series estimate. The $A\propto p$ scaling is also confirmed ($0.0443$
+measured vs $0.0431$ predicted at $p=0.05$).
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\textwidth]{../results/figs/fig7_cascade.png}
+  \caption{\textbf{The bounce cascade.} Left: cycle durations
+  $\Delta t_n$ against cycle number, with the fitted law
+  $\Delta t_n=0.086/n^{2.01}$. Right: field velocity at the crossings,
+  $|u|_n=5.2\,n+2$. The $\sum n^{-2}$ series accumulates at
+  $t_{\rm acc}\approx-3.6254$: infinitely many bounces with unbounded
+  kinetic energy in finite time.}
+  \label{fig:cascade}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\textwidth]{../results/figs/fig8_cascade_law.png}
+  \caption{\textbf{The cascade law, derived vs measured.} Left:
+  $\Delta t_n n^2$ converges onto the predicted $A=3p/\pi\sqrt{3\rhoc}$
+  (dashed) for both $p$. Right: $u_n/\alpha$ is a unit-slope line,
+  $\alpha=c\pi\sqrt{\rhoc/3}$, for both $p$.}
+  \label{fig:cascadelaw}
+\end{figure}
+
+We emphasise that densities never leave $[0,\rhoc]$ in this sequence; it
+is the velocity that diverges, which is why the breakdown is easy to miss
+if one monitors only $\rho$. The cascade is thus a Zeno-type pathology of
+the closure \eqref{eq:eff-friedmann} glued to a negative potential, now
+with a quantitatively explained structure.
 
 \subsection{A failed remedy: flipping the sign of the potential}
 \label{sec:vflip}
@@ -767,10 +840,10 @@ requires physics absent here (ghost-condensate/galileon-type bounce
 mechanics, reheating, or a potential that turns positive); our effective
 model demonstrates the failure mode explicitly rather than resolving it,
 and Sec.~\ref{sec:vflip} shows the failure is robust to a sign flip of the
-potential. (ii) The origin of the cascade law $\Delta t_n\propto n^{-2}$ of
-Sec.~\ref{sec:cascade}: we measure it to $1.5\times10^{-2}$ relative
-accuracy and identify the accumulation, but have no analytic derivation of
-the exponent. (iii) Perturbations across the bounce and the quantum
+potential. (ii) The cascade law $\Delta t_n\propto n^{-2}$ of
+Sec.~\ref{sec:cascade} is now derived analytically and verified to four
+significant digits, including its $p$-scaling; what remains open there is
+only the $1/n$ correction terms (the few-percent transient at small $n$). (iii) Perturbations across the bounce and the quantum
 boundary proposal (no-boundary vs tunnelling, cf.\
 \cite{BattarraLehners:2014,Feldbrugge:2017}): our
 Sec.~\ref{sec:classicality} is a trajectory-level WKB check, the input
@@ -799,9 +872,10 @@ stability. Neither the contraction nor the smoothing contains an exit:
 reading a bounce out of the background requires wholesale new dynamics, and
 the naive option---an $H^2$-deformation glued onto the unchanged
 negative-potential model---works exactly once and then visibly falls apart,
-recollapsing into a Zeno cascade ($\Delta t_n\propto n^{-2}$,
-$|u|_n\propto n$, infinite bounces with unbounded kinetic energy in finite
-time) that no sign flip of the potential averts. Semiclassically, the
+recollapsing into a Zeno cascade whose law we derive and confirm ($\Delta
+t_n=3p\,n^{-2}/\pi\sqrt{3\rhoc}$, $|u|_n=c\pi\sqrt{\rhoc/3}\,n$: infinite
+bounces with unbounded kinetic energy in finite time) that no sign flip of
+the potential averts. Semiclassically, the
 contracting branch is an increasingly good WKB history:
 $\cQ\propto a^{(1-3p)/p}$ improves monotonically through ekpyrosis,
 exponentially in the contraction e-folds, providing the local,

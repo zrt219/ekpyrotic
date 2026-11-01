@@ -221,6 +221,31 @@
       "u_bounce": -2.434803071367046,
       "breakdown_dt": 0.1929248595683326,
       "note": "sign flip does not rescue expansion; rho returns to the constraint boundary in finite time"
+    },
+    "7": {
+      "law": "dt_n = A/n^2, A = 3p/(pi*sqrt(3*rho_c)); u_n = alpha*n, alpha = c*pi*sqrt(rho_c/3); dphi_n = -2/(c n); t_acc - t_N = A (pi^2/6 - H_N^(2))",
+      "checks": [
+        {
+          "p": 0.1,
+          "alpha_pred": 5.1939309483579885,
+          "alpha_m": 5.193776479953651,
+          "A_pred": 0.08610310763591117,
+          "ratio_mean": 1.025010539179331,
+          "ratio_std": 0.02177049911912696,
+          "dphi_ratio": 1.003654257349788,
+          "n_cycles": 115
+        },
+        {
+          "p": 0.05,
+          "alpha_pred": 7.345327589197218,
+          "alpha_m": 7.34520788010452,
+          "A_pred": 0.043051553817955585,
+          "ratio_mean": 1.0260734303072234,
+          "ratio_std": 0.021977866897635458,
+          "dphi_ratio": 1.0020604781165,
+          "n_cycles": 108
+        }
+      ]
     }
   }
 }

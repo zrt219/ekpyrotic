@@ -1,3 +1,11 @@
 __pycache__/
 .scratch/
 *.pyc
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.fls
+paper/*.fdb_latexmk
+notebooks/conv.log
